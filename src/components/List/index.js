@@ -2,7 +2,7 @@ import React from 'react';
 
 import { MdAdd } from 'react-icons/md';
 
-import Card from '../Card'
+import ListDrop from '../ListDrop'
 
 import { Container } from './styles';
 
@@ -19,16 +19,8 @@ export default function List({ data, index: listIndex }) {
         )}
       </header>
 
-      <ul>
-        { data.cards.map((card, index) => 
-          (<Card 
-            key={card.id}
-            index={index} 
-            listIndex={listIndex} 
-            data={card} 
-          />)
-        )}
-      </ul>
+      <ListDrop cards={data.cards} listIndex={listIndex} listSize={data.cards.length}/>
+
     </Container>
   );
 }
