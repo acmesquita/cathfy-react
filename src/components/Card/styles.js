@@ -29,12 +29,17 @@ export const Container = styled.div`
   }
 
   ${props => props.isDragging && css`
-    border: 2px dashed #0003;
+    border-top: 2px dashed #0003;
+    border-bottom: 2px dashed #0003;
     padding-top: 31px;
     border-radius: 0;
     background: transparent;
     box-shadow: none;
     cursor: grabbing;
+
+    &:first-child {
+      border-top: none;
+    }
 
     p, img, header{
       opacity: 0;
