@@ -31,9 +31,11 @@ export default function Board() {
   }
 
   function add(card){
-    setLists(produce(lists, draft => {
-      draft[0].cards.push(card)
-    }))  
+    api.post('/lists/1/cards', card).then( res => {
+      setLists(produce(lists, draft => {
+        draft[0].cards.push(res.data)
+      }))
+    })  
   }
 
   return (

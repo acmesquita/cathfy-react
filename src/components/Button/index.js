@@ -8,12 +8,11 @@ export default function Button() {
 	const { add } = useContext(BoardContext)
 
   function addCard(){
-    let response = prompt('Opa')
+    let response = prompt('Adicionar nova tarefa')
     let card = {
-      id: 14,
       content: response,
       labels: ['#7159c1'],
-      user: 'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/profile.png'
+      user_id: 1
     }
     add(card)
   }
