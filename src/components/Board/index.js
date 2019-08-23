@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import produce from 'immer';
 import BoardContext from './context'
-import {loadLists} from '../../services/api'
+import api from '../../services/api'
 
 import List from '../List'
 import { Container } from './styles';
 
-const data = loadLists();
 
 export default function Board() {
-  const [lists, setLists] = useState(data)
 
+  const [lists, setLists] = useState([])
+  
+  useEffect( () => {
+    async function loadLists() {
+      const res = await api.get('/lists')
+      setLists(res.data)
+    }
+
+    loadLists()
+  }, [])
+
+  
   function move(fromList, toList, fromCard, toCard){
     setLists(produce(lists, draft => {
       const dragged = draft[fromList].cards[fromCard]
@@ -20,8 +30,14 @@ export default function Board() {
     }))    
   }
 
+  function add(card){
+    setLists(produce(lists, draft => {
+      draft[0].cards.push(card)
+    }))  
+  }
+
   return (
-    <BoardContext.Provider value={{ lists, move }}>
+    <BoardContext.Provider value={{ lists, move, add }}>
       <Container>
         { lists.map((list, index) => <List key={list.title} index={index} data={list} listSize={list.cards.length} />) }
       </Container>

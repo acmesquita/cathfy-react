@@ -1,21 +1,19 @@
 import React from 'react';
 
-import { MdAdd } from 'react-icons/md';
-
 import ListDrop from '../ListDrop'
 
 import { Container } from './styles';
+import Button from '../Button';
 
 export default function List({ data, index: listIndex }) {
+
   return (
     <Container done={data.done}>
       <header>
         <h2>{data.title}</h2>
 
         { data.creatable && (
-          <button>
-            <MdAdd size={24} color="#FFF" />
-          </button>
+          <Button />
         )}
       </header>
 
