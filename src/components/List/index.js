@@ -10,7 +10,7 @@ export default function List({ data, index: listIndex }) {
   return (
     <Container done={data.done}>
       <header>
-        <h2>{data.title}</h2>
+        <h2>{data.title} [{data.cards.length}]</h2>
 
         { data.creatable && (
           <Button />

@@ -7,7 +7,7 @@ import { Container, Label } from './styles';
 export default function Card({ data, index, listIndex }) {
 
   const ref = useRef()
-  const { move } = useContext(BoardContext)
+  const { move, updateList } = useContext(BoardContext)
 
   const [{isDragging}, dragRef] = useDrag({
     item: { type: 'CARD', index, id: data.id , listIndex },
@@ -18,6 +18,9 @@ export default function Card({ data, index, listIndex }) {
 
   const [, dropRef] = useDrop({
     accept:['CARD'],
+    drop:(item, mon) => {
+      updateList(item.listIndex);
+    },
     hover(item, monitor){
       const draggedListIndex = item.listIndex;
       const targetListIndex = listIndex;
@@ -52,7 +55,7 @@ export default function Card({ data, index, listIndex }) {
       <header>
         {data.labels.map(label => <Label key={label} color={label} />)}
       </header>
-      <p>{data.content}</p>
+      <p>#{data.position} - {data.content}</p>
       {data.user && (<img src={data.user} alt="avatar"/>)}
     </Container>
   );

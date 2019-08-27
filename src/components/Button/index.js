@@ -11,7 +11,7 @@ export default function Button() {
     let response = prompt('Adicionar nova tarefa')
     let card = {
       content: response,
-      labels: ['#7159c1'],
+      labels: '#7159c1',
       user_id: 1
     }
     add(card)

@@ -6,10 +6,13 @@ import { Container } from './styles';
 import Card from '../Card';
 
 export default function ListDrop({ cards, listIndex, listSize }) {
-  const { move } = useContext(BoardContext)
+  const { move, updateList } = useContext(BoardContext)
 
   const [{ isOver }, dropRef] = useDrop({
     accept: 'CARD',
+    drop:(item, mon) => {
+      updateList(item.listIndex);
+    },
     hover: (item, mon) => {
       const listFrom = item.listIndex
       const listTo = listIndex
