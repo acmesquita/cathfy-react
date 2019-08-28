@@ -66,10 +66,12 @@ export default function Board() {
   }
 
   function add(card){
-    api.post('/lists/1/cards', card).then( res => {
+    setLoading(true)
+    api.post('/lists/1/cards', {card}).then( res => {
       setLists(produce(lists, draft => {
         draft[0].cards.push(res.data)
-        draft[0].cards.sort((c1, c2) => c1.position - c2.position)
+        updateList(1)
+        setLoading(false)
       }))
     })  
   }
