@@ -73,6 +73,7 @@ export default function Card({ data, index, listIndex }) {
                 overflow: 'visible',
                 height: '600px',
                 maxWidth: '700px',
+                width: '700px',
                 padding:'20px',
               }}>
         <div style={
@@ -80,14 +81,12 @@ export default function Card({ data, index, listIndex }) {
             paddingBottom: '20px'
           }
         }>
-          <h1>#{data.position} - {data.content}</h1>
+          <h2>{data.content}</h2>
         </div>
         {data.user && (<img src={data.user} alt="avatar" width={40} height={40} style={{borderRadius: '3px'}}/> )}
         <p><b>Descrição</b></p>
         <p>
-        Amet vel numquam reiciendis velit laboriosam molestiae consequuntur in animi.
-        Amet vel numquam reiciendis velit laboriosam molestiae consequuntur in animi.
-        Amet vel numquam reiciendis velit laboriosam molestiae consequuntur in animi.
+        {data.description}
         </p>
       </PopPop>
 

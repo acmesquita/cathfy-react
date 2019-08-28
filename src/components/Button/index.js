@@ -8,8 +8,10 @@ export default function Button() {
 
   const [show, setShow] = useState(false)
   const [content, setContent] = useState("")
+  const [description, setDescription] = useState("")
   const [card, setCard] = useState({
     content: "",
+    description: "",
     labels: '#7159c1',
     user_id: 1,
     list_id: 1,
@@ -17,8 +19,12 @@ export default function Button() {
   })
   const { add } = useContext(BoardContext)
   
-  function handleChange(event) {
+  function handleChangeContent(event) {
     setContent(event.target.value);
+  }
+
+  function handleChangeDescription(event) {
+    setDescription(event.target.value);
   }
 
   function toggleShow(show){
@@ -26,7 +32,7 @@ export default function Button() {
   }
 
   function addCard(){
-    let newCard = {...card, content: content}
+    let newCard = {...card, content: content, description: description}
     setCard(newCard)
     console.log(newCard)
     add(newCard)
@@ -37,7 +43,7 @@ export default function Button() {
 			<button onClick={() => toggleShow(true)}>
 				<MdAdd size={24} color="#FFF" />
 			</button>
-      <PopPop position="bottomLeft"
+      <PopPop position="centerCenter"
               open={show}
               closeBtn={true}
               closeOnEsc={true}
@@ -58,7 +64,9 @@ export default function Button() {
             paddingBottom: '20px'
           }
         }>
-          <h1>Adicionar nova tarefa</h1>
+          <h1 style={{
+            paddingTop: '8px'
+          }}>Nova Tarefa</h1>
         </div>
         <div style={
           {
@@ -66,29 +74,70 @@ export default function Button() {
             flexDirection: 'column',
             justifyContent: 'space-between',
             alignContent: 'center',
-            height: 'calc(100% - 50px)',
+            height: 'calc(100% - 60px)',
           }
         }>
-          <input 
-            placeholder="Título"
-            onChange={handleChange}
-            value={content}
-            style={{
-              marginBottom: '5px',
-              padding: '3px',
-              display: 'inline-block',
-              boxSizing: 'content-box',
-              border: '0 solid #ffffff',
-              borderRightWidth: '1px',
-              borderBottom: '1px solid #878787',
-              font: 'normal 16px/normal Verdana, Geneva, sans-serif',
-              color: 'rgb(33, 33, 33)',
-              textOverflow: 'clip',
-              background: 'rgba(252,252,252,1)',
-              boxShadow: '0 0 0 0 rgba(0,0,0,0.2) inset',
-              textShadow: '1px 1px 0 rgba(255,255,255,0.66)',
-              transition: 'all 200ms cubic-bezier(0.42, 0, 0.58, 1)',
-            }}/>
+          <div style={
+            {
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              alignContent: 'center',
+              height: '50px',
+            }
+          }>
+            <label>Título</label>
+            <input 
+              onChange={handleChangeContent}
+              value={content}
+              style={{
+                marginBottom: '5px',
+                padding: '3px',
+                display: 'inline-block',
+                boxSizing: 'content-box',
+                border: '0 solid #ffffff',
+                borderRightWidth: '1px',
+                borderBottom: '1px solid #878787',
+                font: 'normal 16px/normal Verdana, Geneva, sans-serif',
+                color: 'rgb(33, 33, 33)',
+                textOverflow: 'clip',
+                background: 'rgba(252,252,252,1)',
+                boxShadow: '0 0 0 0 rgba(0,0,0,0.2) inset',
+                textShadow: '1px 1px 0 rgba(255,255,255,0.66)',
+                transition: 'all 200ms cubic-bezier(0.42, 0, 0.58, 1)',
+              }}/>
+          </div>
+          <div style={
+            {
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignContent: 'center',
+              height: '200px',
+            }
+          }>
+            <label>Descrição</label>
+            <textarea 
+              rows={10}
+              onChange={handleChangeDescription}
+              value={description}
+              style={{
+                marginBottom: '5px',
+                padding: '3px',
+                display: 'inline-block',
+                boxSizing: 'content-box',
+                border: '0 solid #ffffff',
+                borderRightWidth: '1px',
+                borderBottom: '1px solid #878787',
+                font: 'normal 16px/normal Verdana, Geneva, sans-serif',
+                color: 'rgb(33, 33, 33)',
+                textOverflow: 'clip',
+                background: 'rgba(252,252,252,1)',
+                boxShadow: '0 0 0 0 rgba(0,0,0,0.2) inset',
+                textShadow: '1px 1px 0 rgba(255,255,255,0.66)',
+                transition: 'all 200ms cubic-bezier(0.42, 0, 0.58, 1)',
+              }}/>
+          </div>
           <button 
             type="button"
             onClick={addCard}
