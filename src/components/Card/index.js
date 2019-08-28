@@ -4,6 +4,7 @@ import { useDrag, useDrop } from 'react-dnd'
 import PopPop from 'react-poppop';
 
 import { Container, Label } from './styles';
+import ViewCard from '../ViewCard';
 
 export default function Card({ data, index, listIndex }) {
 
@@ -76,18 +77,7 @@ export default function Card({ data, index, listIndex }) {
                 width: '700px',
                 padding:'20px',
               }}>
-        <div style={
-          {
-            paddingBottom: '20px'
-          }
-        }>
-          <h2>{data.content}</h2>
-        </div>
-        {data.user && (<img src={data.user} alt="avatar" width={40} height={40} style={{borderRadius: '3px'}}/> )}
-        <p><b>Descrição</b></p>
-        <p>
-        {data.description}
-        </p>
+        <ViewCard card={data} listId={listIndex} />
       </PopPop>
 
     </Container>

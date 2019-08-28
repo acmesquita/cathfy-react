@@ -18,6 +18,10 @@ export default function Board() {
       const res = await api.get('/lists')
      
       let lista = res.data.map(list => {
+        list.cards = list.cards.map( (card, index) => {
+          card.position = index
+          return card
+        })
         let listSort = {...list, cards: list.cards.sort((c1, c2) => c1.position - c2.position)}
         return listSort
       })
@@ -40,6 +44,7 @@ export default function Board() {
   }
 
   function updateListPosition() {
+
     let newLists = produce(lists, draft => {
       draft.map(list => {
         list.cards = list.cards.map( (card, index) => {
@@ -49,6 +54,7 @@ export default function Board() {
         let listSort = list.cards.sort((c1, c2) => c1.position - c2.position)
         return listSort
       })
+
     })
     setLists(newLists);
     return newLists
@@ -76,6 +82,19 @@ export default function Board() {
     })  
   }
 
+  function addItem(listId, cardPosition, item){
+    setLists(produce(lists, draft => {
+      draft[listId].cards[cardPosition].items.push(item)
+    }))
+  }
+
+  function updateIdItem(listId, cardPosition, item){
+    setLists(produce(lists, draft => {
+      
+      draft[listId].cards[cardPosition].items.push(item)
+    }))
+  }
+
   if(loading){
     return (
       <Loading>
@@ -84,7 +103,7 @@ export default function Board() {
     );
   }else {
     return (
-      <BoardContext.Provider value={{ lists, move, add, updateList }}>
+      <BoardContext.Provider value={{ lists, move, add, addItem, updateList, updateListPosition, updateIdItem }}>
         <Container>
           { lists.map((list, index) => <List key={list.title} index={index} data={list} listSize={list.cards.length} />) }
         </Container>

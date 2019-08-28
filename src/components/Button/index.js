@@ -15,7 +15,8 @@ export default function Button() {
     labels: '#7159c1',
     user_id: 1,
     list_id: 1,
-    position: 0
+    position: -1,
+    items: []
   })
   const { add } = useContext(BoardContext)
   
