@@ -37,6 +37,7 @@ export default function DescriptionCard({card, listId}) {
   return (
     <Container>
        <TextareaAutosize
+          placeholder="Descrição..."
           className={save ? "descriptionFocus description" : "description"}
           value={description}
           onChange={handleChange}
