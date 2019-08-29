@@ -4,6 +4,7 @@ import { Container } from './styles';
 import ItemCard from '../ItemCard';
 import NewItemCard from '../NewItemCard';
 import ProgressBar from '../ProgressBar';
+import DescriptionCard from '../DescriptionCard';
 
 export default function ViewCard({ card, listId }) {
   return (
@@ -17,13 +18,14 @@ export default function ViewCard({ card, listId }) {
           <h2>{card.content}</h2>
         </div>
         {card.user && (<img src={card.user} alt="avatar" width={40} height={40} style={{borderRadius: '30px'}}/> )}
-        <p style={{
+        {/* <p style={{
           fontSize: '16px',
           margin: '20px 5px'
         }}>
         {card.description}
-        </p>
-        <hr />
+        </p> */}
+
+        <DescriptionCard card={card} listId={listId}/>      
         <h3 style={{
           margin: '10px 5px'
         }}>Lista</h3>

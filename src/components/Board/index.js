@@ -89,7 +89,6 @@ export default function Board() {
   }
 
   function checkItem(listId, cardId, item) {
-    
     let newList = lists.map(list => {
       list.cards.map(card => {
         if(card.id === cardId){
@@ -109,6 +108,20 @@ export default function Board() {
 
   }
 
+  function saveDescriptionCard(cardId, card){
+    let newList = lists.map(list => {
+      list.cards.map(c => {
+        if(c.id === cardId){
+          c.description = card.description
+        }
+        return card
+      })
+      return list
+    })
+    
+    setLists(newList)
+  }
+
   if(loading){
     return (
       <Loading>
@@ -117,7 +130,7 @@ export default function Board() {
     );
   }else {
     return (
-      <BoardContext.Provider value={{ lists, move, add, addItem, updateList, updateListPosition, checkItem }}>
+      <BoardContext.Provider value={{ lists, move, add, addItem, updateList, updateListPosition, checkItem, saveDescriptionCard }}>
         <Container>
           { lists.map((list, index) => <List key={list.title} index={index} data={list} listSize={list.cards.length} />) }
         </Container>

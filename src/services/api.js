@@ -29,6 +29,13 @@ export async function sendCard(idList, card){
   return res.data
 }
 
+export async function editCard(idList, card){
+
+  let res = await api.put(`/lists/${idList}/cards/${card.id}`, {...card, user_id: 1})
+  console.log('Res', res)
+  return res.data
+}
+
 export async function sendItem(list_id, card_id, item){
   let res = await api.post(`/lists/${list_id}/cards/${card_id}/items`, {item})
   return res.data
