@@ -88,11 +88,25 @@ export default function Board() {
     }))
   }
 
-  function updateIdItem(listId, cardPosition, item){
-    setLists(produce(lists, draft => {
-      
-      draft[listId].cards[cardPosition].items.push(item)
-    }))
+  function checkItem(listId, cardId, item) {
+    
+    let newList = lists.map(list => {
+      list.cards.map(card => {
+        if(card.id === cardId){
+          card.items.map(i => {
+            if(i.id === item.id){
+              i.done = item.done;
+            }
+            return i
+          })
+        }
+        return card
+      })
+      return list
+    })
+    
+    setLists(newList)
+
   }
 
   if(loading){
@@ -103,7 +117,7 @@ export default function Board() {
     );
   }else {
     return (
-      <BoardContext.Provider value={{ lists, move, add, addItem, updateList, updateListPosition, updateIdItem }}>
+      <BoardContext.Provider value={{ lists, move, add, addItem, updateList, updateListPosition, checkItem }}>
         <Container>
           { lists.map((list, index) => <List key={list.title} index={index} data={list} listSize={list.cards.length} />) }
         </Container>

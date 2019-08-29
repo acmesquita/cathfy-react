@@ -2,12 +2,12 @@ import React, {useState, useContext} from 'react';
 import BoardContext from '../Board/context'
 
 import {sendItem} from '../../services/api'
-// import { Container } from './styles';
+import { Container } from './styles';
 
 export default function NewItemCard({ card, listId }) {
 
   const [content, setContent] = useState("")
-  const { addItem, updateIdItem } = useContext(BoardContext)
+  const { addItem } = useContext(BoardContext)
 
   function add(){
     if(content.length > 0){
@@ -18,8 +18,6 @@ export default function NewItemCard({ card, listId }) {
       }
   
       sendItem(listId, card.id, item).then( data => {
-        console.log(data)
-        updateIdItem(listId, card.id, data)
         addItem(listId, card.position, data)
         setContent("")
       })
@@ -31,9 +29,9 @@ export default function NewItemCard({ card, listId }) {
   }
 
   return (
-    <p>
-      <input placeholder="Novo item" value={content} onChange={handleChange}/>
-      <button type="button" onClick={add}>+</button>
-    </p>
+    <Container>
+      <input placeholder="Novo item" className="content" value={content} onChange={handleChange}/>
+      {content.length > 0 && (<button type="button" className="btn-add" onClick={add}>Adicionar</button>)}
+    </Container>
   );
 }

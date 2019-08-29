@@ -64,18 +64,21 @@ export default function Card({ data, index, listIndex }) {
       </header>
       <p  onClick={() => toggleShow(true)}>#{data.position} - {data.content}</p>
       {data.user && (<img src={data.user} alt="avatar"/>)}
-      <PopPop position="centerCenter"
+      <PopPop position="topCenter"
               open={show}
               closeBtn={true}
               closeOnEsc={true}
               onClose={() => toggleShow(false)}
               closeOnOverlay={true}
+              overlayStyle={{
+              }}
               contentStyle={{
                 overflow: 'visible',
-                height: '600px',
                 maxWidth: '700px',
                 width: '700px',
                 padding:'20px',
+                margin: '20px 0 50px',
+                minHeight: '600px',
               }}>
         <ViewCard card={data} listId={listIndex} />
       </PopPop>
