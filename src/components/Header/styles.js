@@ -8,4 +8,10 @@ export const Container = styled.div`
 
   display: flex;
   align-items: center;
+
+  a {
+    text-decoration: none;
+    color: #FFF;
+    cursor: pointer;
+  }
 `;

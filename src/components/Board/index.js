@@ -8,25 +8,28 @@ import List from '../List'
 import { Container, Loading } from './styles';
 
 
-export default function Board() {
+export default function Board({board}) {
 
   const [lists, setLists] = useState([])
   const [loading, setLoading] = useState(false)
   
   useEffect( () => {
     async function loadLists() {
-      const res = await api.get('/lists')
-     
-      let lista = res.data.map(list => {
-        list.cards = list.cards.map( (card, index) => {
-          card.position = index
-          return card
+      if(board){
+        let path = `/boards/${board.id}/lists`
+        const res = await api.get(path)
+       
+        let lista = res.data.map(list => {
+          list.cards = list.cards.map( (card, index) => {
+            card.position = index
+            return card
+          })
+          let listSort = {...list, cards: list.cards.sort((c1, c2) => c1.position - c2.position)}
+          return listSort
         })
-        let listSort = {...list, cards: list.cards.sort((c1, c2) => c1.position - c2.position)}
-        return listSort
-      })
-      console.log(lista)     
-      setLists(lista)
+        console.log(lista)     
+        setLists(lista)
+      }
     }
 
     loadLists()

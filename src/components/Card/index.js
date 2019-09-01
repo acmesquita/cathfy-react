@@ -62,7 +62,7 @@ export default function Card({ data, index, listIndex }) {
       <header>
         {data.labels.map(label => <Label key={label} color={label} />)}
       </header>
-      <p  onClick={() => toggleShow(true)}>#{data.position} - {data.content}</p>
+      <p  onClick={() => toggleShow(true)}>{data.content}</p>
       {data.user && (<img src={data.user} alt="avatar"/>)}
       <PopPop position="topCenter"
               open={show}

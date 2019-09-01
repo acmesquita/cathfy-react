@@ -13,7 +13,7 @@ export default function List({ data, index: listIndex }) {
         <h2>{data.title} {data.cards.length}</h2>
 
         { data.creatable && (
-          <Button />
+          <Button listId={data.id} />
         )}
       </header>
 
