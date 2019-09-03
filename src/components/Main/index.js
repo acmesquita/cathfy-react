@@ -4,8 +4,9 @@ import ViewBoard from '../ViewBoard';
 import MainContext from './context'
 import Board from '../Board'
 
-
 import { Container } from './styles';
+import ButtonBoard from '../ButtonBoard';
+import produce from 'immer';
 
 export default function Main() {
   
@@ -21,16 +22,22 @@ export default function Main() {
     loadBoards()
   }, [])
 
+  function addBoard(board){
+    setBoards(produce(boards, draft => {
+      draft.push(board)
+    }))
+  }
 
   return (
     <>
     { !boardCurrent && 
-      <MainContext.Provider value={{ setBoardCurrent }}>
+      <MainContext.Provider value={{ setBoardCurrent, addBoard }}>
         <Container>
           { boards && !boardCurrent &&
             boards.map( board => (<ViewBoard key={`_${board.id}`} board={board} />))
           }
         </Container>
+        <ButtonBoard />
       </MainContext.Provider>
     }
     { boardCurrent && 

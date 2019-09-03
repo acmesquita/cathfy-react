@@ -23,6 +23,10 @@ export function sendList(list) {
   })
 }
 
+export async function sendBoard(board){
+  return api.post('/boards', {board})
+}
+
 export async function sendCard(idList, card){
   let res = await api.post(`/lists/${idList}/cards/${card.id}`, {card})
   console.log('Res', res)

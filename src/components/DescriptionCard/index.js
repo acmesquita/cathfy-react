@@ -20,9 +20,9 @@ export default function DescriptionCard({card, listId}) {
   }
 
   function saveCard(){
+    setDescription(description)
     let newCard = {...card, description: description}
     editCard(listId, newCard)
-    setDescription(description)
     saveDescriptionCard(card.id, newCard)
     setSave(false)
   }
