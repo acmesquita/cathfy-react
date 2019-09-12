@@ -8,7 +8,7 @@ import List from '../List'
 import { Container, Loading } from './styles';
 
 
-export default function Board({board}) {
+export default function Board({board, user}) {
 
   const [lists, setLists] = useState([])
   const [loading, setLoading] = useState(false)
@@ -17,7 +17,9 @@ export default function Board({board}) {
     async function loadLists() {
       if(board){
         let path = `/boards/${board.id}/lists`
-        const res = await api.get(path)
+        const res = await api.get(path, {
+          headers: { Authorization: "Bearer " + user.token }
+        })
        
         let lista = res.data.map(list => {
           list.cards = list.cards.map( (card, index) => {
@@ -39,7 +41,7 @@ export default function Board({board}) {
     let newLists = updateListPosition();
     let list = newLists[idList]
     setLoading(true)
-    sendList(list).then( res => {
+    sendList(list, user.token).then( res => {
       if(res.status === 204){
         setLoading(false)
       }
@@ -76,7 +78,9 @@ export default function Board({board}) {
 
   function add(card){
     setLoading(true)
-    api.post('/lists/1/cards', {card}).then( res => {
+    api.post('/lists/1/cards', {card}, {
+      headers: { Authorization: "Bearer " + user.token }
+    }).then( res => {
       setLists(produce(lists, draft => {
         draft[0].cards.push(res.data)
         updateList(1)
@@ -135,7 +139,7 @@ export default function Board({board}) {
     return (
       <BoardContext.Provider value={{ lists, move, add, addItem, updateList, updateListPosition, checkItem, saveDescriptionCard }}>
         <Container>
-          { lists.map((list, index) => <List key={list.title} index={index} data={list} listSize={list.cards.length} />) }
+          { lists.map((list, index) => <List key={list.title} index={index} data={list} listSize={list.cards.length} token={user.token} />) }
         </Container>
       </BoardContext.Provider>
     );

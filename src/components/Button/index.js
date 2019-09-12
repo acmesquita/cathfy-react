@@ -4,7 +4,7 @@ import BoardContext from '../Board/context'
 import { MdAdd } from 'react-icons/md';
 import { Container } from './styles';
 
-export default function Button({ listId}) {
+export default function Button({ listId, token }) {
 
   const [show, setShow] = useState(false)
   const [content, setContent] = useState("")

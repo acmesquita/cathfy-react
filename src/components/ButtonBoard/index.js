@@ -6,7 +6,7 @@ import MainContext from '../Main/context'
 
 import { Container } from './styles';
 
-export default function ButtonBoard() {
+export default function ButtonBoard({ token }) {
 
   const [show, setShow] = useState(false)
   const [board, setBoard] = useState({})
@@ -18,8 +18,8 @@ export default function ButtonBoard() {
   }
 
   function sendNewBoard(){
-    console.log(board)
-    sendBoard(board).then( res => {
+    console.log(board, token)
+    sendBoard(board, token).then( res => {
       addBoard(res.data)
       setBoard({})
       setShow(false)

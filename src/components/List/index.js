@@ -5,7 +5,7 @@ import ListDrop from '../ListDrop'
 import { Container } from './styles';
 import Button from '../Button';
 
-export default function List({ data, index: listIndex }) {
+export default function List({ data, index: listIndex, token }) {
 
   return (
     <Container done={data.done}>
@@ -13,7 +13,7 @@ export default function List({ data, index: listIndex }) {
         <h2>{data.title} {data.cards.length}</h2>
 
         { data.creatable && (
-          <Button listId={data.id} />
+          <Button listId={data.id} token={token} />
         )}
       </header>
 
