@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import produce from 'immer';
 import ReactLoading from 'react-loading';
 import BoardContext from './context'
-import api, {sendList} from '../../services/api'
+import {sendList, getLists, sendCard} from '../../services/api'
 
 import List from '../List'
 import { Container, Loading } from './styles';
 
 
-export default function Board({board, user}) {
+export default function Board({board}) {
 
   const [lists, setLists] = useState([])
   const [loading, setLoading] = useState(false)
@@ -16,21 +16,19 @@ export default function Board({board, user}) {
   useEffect( () => {
     async function loadLists() {
       if(board){
-        let path = `/boards/${board.id}/lists`
-        const res = await api.get(path, {
-          headers: { Authorization: "Bearer " + user.token }
+        getLists(board.id).then(res => {
+          let lista = res.data.map(list => {
+            list.cards = list.cards.map( (card, index) => {
+              card.position = index
+              return card
+            })
+            let listSort = {...list, cards: list.cards.sort((c1, c2) => c1.position - c2.position)}
+            return listSort
+          })
+          console.log(lista)     
+          setLists(lista)
         })
        
-        let lista = res.data.map(list => {
-          list.cards = list.cards.map( (card, index) => {
-            card.position = index
-            return card
-          })
-          let listSort = {...list, cards: list.cards.sort((c1, c2) => c1.position - c2.position)}
-          return listSort
-        })
-        console.log(lista)     
-        setLists(lista)
       }
     }
 
@@ -41,10 +39,8 @@ export default function Board({board, user}) {
     let newLists = updateListPosition();
     let list = newLists[idList]
     setLoading(true)
-    sendList(list, user.token).then( res => {
-      if(res.status === 204){
-        setLoading(false)
-      }
+    sendList(list).then( res => {
+      setLoading(false)
     })
   }
 
@@ -76,11 +72,9 @@ export default function Board({board, user}) {
     
   }
 
-  function add(card){
+  function add(list_id, card){
     setLoading(true)
-    api.post('/lists/1/cards', {card}, {
-      headers: { Authorization: "Bearer " + user.token }
-    }).then( res => {
+    sendCard(list_id, card).then( res => {
       setLists(produce(lists, draft => {
         draft[0].cards.push(res.data)
         updateList(1)
@@ -119,6 +113,7 @@ export default function Board({board, user}) {
     let newList = lists.map(list => {
       list.cards.map(c => {
         if(c.id === cardId){
+          console.log(c, card)
           c.description = card.description
         }
         return card
@@ -139,7 +134,7 @@ export default function Board({board, user}) {
     return (
       <BoardContext.Provider value={{ lists, move, add, addItem, updateList, updateListPosition, checkItem, saveDescriptionCard }}>
         <Container>
-          { lists.map((list, index) => <List key={list.title} index={index} data={list} listSize={list.cards.length} token={user.token} />) }
+          { lists.map((list, index) => <List key={list.title} index={index} data={list} listSize={list.cards.length} />) }
         </Container>
       </BoardContext.Provider>
     );

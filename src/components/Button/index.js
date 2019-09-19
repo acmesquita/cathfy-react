@@ -4,7 +4,7 @@ import BoardContext from '../Board/context'
 import { MdAdd } from 'react-icons/md';
 import { Container } from './styles';
 
-export default function Button({ listId, token }) {
+export default function Button({ listId }) {
 
   const [show, setShow] = useState(false)
   const [content, setContent] = useState("")
@@ -36,7 +36,7 @@ export default function Button({ listId, token }) {
     let newCard = {...card, content: content, description: description}
     setCard(newCard)
     console.log(newCard)
-    add(newCard)
+    add(newCard.list_id, newCard)
   }
 
 	return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../services/api'
+import {initAuth, getBoards} from '../../services/api'
 import ViewBoard from '../ViewBoard';
 import MainContext from './context'
 import Board from '../Board'
@@ -17,16 +17,15 @@ export default function Main() {
   const [messageError, setMessageError] = useState(false)
 
   function loadBoards(token){
-    api.get('/boards', {
-      headers: { "Authorization": "Bearer " + token , "Content-Type": "application/json"}
-    }).then(res => {
+    getBoards().then(res => {
       setBoards(res.data)
     })
   }
   
   useEffect( () => {
     if(userCurrent){
-      loadBoards(userCurrent.token)
+      initAuth(userCurrent.token)
+      loadBoards(userCurrent)
     }
   }, [])
   
@@ -38,7 +37,7 @@ export default function Main() {
   
   function setUser(user){
     if(user.token){
-      setUserCurrent(user)
+      setUserCurrent(user.token)
       localStorage.setItem("token", JSON.stringify(user))
     }
     else {
@@ -51,7 +50,7 @@ export default function Main() {
     return userCurrent;
   }
 
-  if(!userCurrent || !userCurrent.token){
+  if(!userCurrent){
     return (
       <MainContext.Provider value={{ setUser, getUser, loadBoards }}>
         <Container>
@@ -63,18 +62,18 @@ export default function Main() {
 
   return (
     <>
-    { !boardCurrent && userCurrent && userCurrent.token &&
+    { !boardCurrent && userCurrent &&
       <MainContext.Provider value={{ setBoardCurrent, addBoard }}>
         <Container>
           { boards && !boardCurrent &&
             boards.map( board => (<ViewBoard key={`_${board.id}`} board={board} />))
           }
         </Container>
-        <ButtonBoard token={userCurrent.token} />
+        <ButtonBoard />
       </MainContext.Provider>
     }
-    { boardCurrent && userCurrent && userCurrent.token &&
-      <Board board={boardCurrent} user={userCurrent} />
+    { boardCurrent && userCurrent &&
+      <Board board={boardCurrent} />
     }
     </>
   );

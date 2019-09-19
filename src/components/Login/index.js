@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import MainContext from '../Main/context';
 import { Container } from './styles';
-import api, {createUser, authUser} from '../../services/api'
+import {createUser, authUser} from '../../services/api'
 import MessageError from '../MessageError';
 
 

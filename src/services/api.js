@@ -4,7 +4,9 @@ const api = axios.create({
   baseURL: 'http://localhost:3000/api/v1'
 });
 
-export default api
+export function initAuth(token){
+  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 export function createUser(user){
   return new Promise((resolve, reject) => {
@@ -22,14 +24,24 @@ export function createUser(user){
 export function authUser(auth) {
   return new Promise((resolve, reject) => {
     api.post('/user_token', auth).then( res => {
-      resolve(res.data);
+      api.defaults.headers.common['Authorization'] = `Bearer ${res.data.jwt}`;
+      resolve(res.data)
     }).catch(err => {
       reject(err)
     })
   })
 }
 
-export function sendList(list, token) {
+export function getLists(board_id) {
+  return new Promise( (resolve, reject) => {
+    let path = `/boards/${board_id}/lists`
+    api.get(path).then( res => {
+      resolve(res)
+    }).catch( err => reject(err))
+  });
+}
+
+export function sendList(list ) {
   return new Promise(async (resolve, reject)=> {
     const obj = {...list}
     const cards = [...obj.cards].map(card => (
@@ -40,47 +52,38 @@ export function sendList(list, token) {
       }
     ));
     console.log(cards)
-    const res = await api.put(`/lists/${list.id}/cards`, {cards}, {
-      headers: { Authorization: ("Bearer " + token) }
+    api.put(`/lists/${list.id}/cards`, {cards}).then(res => {
+      resolve(res)
     })
-    resolve(res)
   })
 }
 
-export async function sendBoard(board, token){
-  console.log(token)
-  return api.post('/boards', {board}, {
-    headers: { Authorization: "Bearer " + token }
-  })
+export function getBoards(){
+  return api.get('/boards')
 }
 
-export async function sendCard(idList, card, token){
-  let res = await api.post(`/lists/${idList}/cards/${card.id}`, {card}, {
-    headers: { Authorization: "Bearer " + token }
-  })
+export async function sendBoard(board ){
+  console.log(api.defaults)
+  return api.post('/boards', {board})
+}
+
+export async function sendCard(idList, card){
+  return api.post(`/lists/${idList}/cards/`, {card})
+}
+
+export async function editCard(idList, card ){
+
+  let res = await api.put(`/lists/${idList}/cards/${card.id}`, {...card, user_id: 1})
   console.log('Res', res)
   return res.data
 }
 
-export async function editCard(idList, card, token){
-
-  let res = await api.put(`/lists/${idList}/cards/${card.id}`, {...card, user_id: 1}, {
-    headers: { Authorization: "Bearer " + token }
-  })
-  console.log('Res', res)
+export async function sendItem(list_id, card_id, item){
+  let res = await api.post(`/lists/${list_id}/cards/${card_id}/items`, {item})
   return res.data
 }
 
-export async function sendItem(list_id, card_id, item, token){
-  let res = await api.post(`/lists/${list_id}/cards/${card_id}/items`, {item}, {
-    headers: { Authorization: "Bearer " + token }
-  })
-  return res.data
-}
-
-export async function sendDoneItem(listId, cardId, item, token){
-  let res = await api.put(`/lists/${listId}/cards/${cardId}/items/${item.id}`, {item}, {
-    headers: { Authorization: "Bearer " + token }
-  })
+export async function sendDoneItem(listId, cardId, item){
+  let res = await api.put(`/lists/${listId}/cards/${cardId}/items/${item.id}`, {item})
   return res.data
 }
