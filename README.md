@@ -1,9 +1,8 @@
 # Cathfy Client React
 
-### Screenshots [link]()
+### Screenshots [more](https://github.com/acmesquita/cathfy-react/blob/master/src/asserts/screenshots/README.md)
 
 ![screenshort-01](https://github.com/acmesquita/cathfy-react/blob/master/src/asserts/screenshots/1.png?raw=true "Início da Aplicação")
-
 
 
 ### Prerequesites
