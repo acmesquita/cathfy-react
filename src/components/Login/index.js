@@ -5,7 +5,7 @@ import {createUser, authUser} from '../../services/api'
 import MessageError from '../MessageError';
 
 
-import logo from '../../asserts/logo.png'
+import logo from '../../assets/logo.png'
 
 export default function Login({ error }) {
 

@@ -1,12 +1,12 @@
 # Cathfy Client React
 
-### Screenshots [more](https://github.com/acmesquita/cathfy-react/blob/master/src/asserts/screenshots/README.md)
+### Screenshots [more](https://github.com/acmesquita/cathfy-react/blob/master/src/assets/screenshots/README.md)
 
-![screenshort-01](https://github.com/acmesquita/cathfy-react/blob/master/src/asserts/screenshots/1.png?raw=true "Início da Aplicação")
+![screenshort-01](https://github.com/acmesquita/cathfy-react/blob/master/src/assets/screenshots/1.png?raw=true "Início da Aplicação")
 
-![screenshort-14](https://github.com/acmesquita/cathfy-react/blob/master/src/asserts/screenshots/14.png?raw=true "Concluindo um card")
+![screenshort-14](https://github.com/acmesquita/cathfy-react/blob/master/src/assets/screenshots/14.png?raw=true "Concluindo um card")
 
-![screenshort-12](https://github.com/acmesquita/cathfy-react/blob/master/src/asserts/screenshots/12.png?raw=true "Barra de progresso concluida")
+![screenshort-12](https://github.com/acmesquita/cathfy-react/blob/master/src/assets/screenshots/12.png?raw=true "Barra de progresso concluida")
 
 ### About
 
