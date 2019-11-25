@@ -27,7 +27,7 @@ export default function Main() {
       initAuth(userCurrent.token)
       loadBoards(userCurrent)
     }
-  }, [userCurrent, boardCurrent, boards])
+  }, [])
   
   function addBoard(board){
     setBoards(produce(boards, draft => {
