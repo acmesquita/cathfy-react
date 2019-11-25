@@ -65,7 +65,7 @@ export default function Login({ error }) {
   return (
     <Container>
       <div className="box-img">
-        <img src={logo} height={100} width={100}/>
+        <img src={logo} height={100} width={100} alt="user"/>
       </div>
       { msg && <MessageError msg={msg} />}
       <div className="box-content">

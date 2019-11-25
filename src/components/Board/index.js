@@ -33,7 +33,7 @@ export default function Board({board}) {
     }
 
     loadLists()
-  }, [])
+  }, [board, lists])
 
   function updateList(idList) {
     let newLists = updateListPosition();
